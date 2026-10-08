@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tailor_order_user,access_tailor_order_user,model_tailor_order,base.group_user,1,1,1,1
+access_tailor_order_shirts,access_tailor_order_shirts,model_tailor_order_shirts,base.group_user,1,1,1,1
+access_tailor_order_pants,access_tailor_order_pants,model_tailor_order_pants,base.group_user,1,1,1,1
+access_tailor_customer_user,access_tailor_customer,model_tailor_customer,base.group_user,1,1,1,1
+access_tailor_pant_style_user,access_tailor_pant_style,model_tailor_pant_style,base.group_user,1,1,1,1
+access_tailor_shirt_type_user,access_tailor_shirt_type,model_tailor_shirt_type,base.group_user,1,1,1,1
+access_tailor_silayi_type_user,access_tailor_silayi_type,model_tailor_silayi_type,base.group_user,1,1,1,1
+access_tailor_pant_type_user,access_tailor_pant_type,model_tailor_pant_type,base.group_user,1,1,1,1
+access_tailor_order_deposit_history,access_tailor_order_deposit_history,model_tailor_order_deposit_history,base.group_user,1,1,1,1
+access_tailor_deposit_wizard,access_tailor_deposit_wizard,model_tailor_deposit_wizard,base.group_user,1,1,1,1
+access_tailor_order_import_wizard,access_tailor_order_import_wizard,model_tailor_order_import_wizard,base.group_user,1,1,1,1

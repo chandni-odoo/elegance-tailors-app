@@ -1,0 +1,10 @@
+<odoo>
+    <data>
+        <record id="Form_kanban_view_mobile_scss" model="ir.asset">
+            <field name="name">form watermark assets</field>
+            <field name="bundle">web.assets_backend</field>
+            <field name="path">backend_watermark_manager/static/src/css/watermark.css</field>
+            <field name="sequence" eval="19"/>
+        </record>
+    </data>
+</odoo>

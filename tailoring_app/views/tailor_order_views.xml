@@ -1,0 +1,282 @@
+<odoo>
+    <record id="view_tailor_order_tree" model="ir.ui.view">
+        <field name="name">tailor.order.tree</field>
+        <field name="model">tailor.order</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="customer_id"/>
+                <field name="phone"/>
+                <field name="delivery_date"/>
+                <field name="state"/>
+                <field name="note"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tailor_order_form" model="ir.ui.view">
+        <field name="name">tailor.order.form</field>
+        <field name="model">tailor.order</field>
+        <field name="arch" type="xml">
+        <form string="Tailor Order">
+            <header>
+                <!-- Confirm -->
+                <button name="action_confirm"
+                        type="object"
+                        string="Confirm"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+
+                <!-- Cutting -->
+<!--                <button name="action_cutting"-->
+<!--                        type="object"-->
+<!--                        string="Cutting"-->
+<!--                        class="btn-secondary"-->
+<!--                        invisible="state != 'confirm'"/>-->
+
+                <!-- In Progress -->
+<!--                <button name="action_inprogress"-->
+<!--                        type="object"-->
+<!--                        string="In Progress"-->
+<!--                        class="btn-secondary"-->
+<!--                        invisible="state != 'cutting'"/>-->
+
+                <!-- Iron -->
+<!--                <button name="action_iron"-->
+<!--                        type="object"-->
+<!--                        string="Iron"-->
+<!--                        class="btn-secondary"-->
+<!--                        invisible="state != 'inprogress'"/>-->
+
+                <!-- Ready -->
+<!--                <button name="action_ready"-->
+<!--                        type="object"-->
+<!--                        string="Ready"-->
+<!--                        class="btn-success"-->
+<!--                        invisible="state != 'iron'"/>-->
+
+                <!-- Delivered -->
+                <button name="action_delivered"
+                        type="object"
+                        string="Delivered"
+                        class="btn-success"
+                        invisible="state in ['draft','cancel','delivered']"/>
+
+                <!-- Cancel (Visible in all except delivered & cancel) -->
+                <button name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        class="btn-danger"
+                        invisible="state not in ['confirm']"/>
+
+                <!-- Reset to Draft -->
+                <button name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        class="btn-secondary"
+                        invisible="state != 'cancel'"/>
+
+                <button name="action_open_deposit_wizard"
+                        string="Add Deposit"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state in ['draft','cancel']"
+                />
+
+                <button name="action_print_pant"
+                        string="Print Pant Maap"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state in ['draft','cancel']"
+                    />
+
+                <button name="action_print_shirt"
+                        string="Print Shirt Maap"
+                        type="object"
+                        invisible="state in ['draft','cancel']"
+                        class="btn-primary"/>
+
+                <!-- Statusbar -->
+                <field name="state"
+                       widget="statusbar"
+                       statusbar_visible="draft,confirm,delivered,cancel"
+                />
+            </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" groups="base.group_user">
+                        <button name="action_view_deposit" type="object"
+                                class="oe_stat_button"
+                                icon="fa-money">
+                            <field name="deposit_count" string="Deposits" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="e.g. Negotiation" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id"/>
+                            <field name="address" widget="text"/>
+<!--                            <label for="street" string="Address"/>-->
+<!--                            <div class="o_address_format">-->
+<!--                                <field name="street" placeholder="Street..." class="o_address_street"/>-->
+<!--                                <field name="street2" placeholder="Street 2..." class="o_address_street"/>-->
+<!--                                <field name="city" placeholder="City" class="o_address_city"/>-->
+<!--                                <field name="state_id" class="o_address_state" placeholder="State" options='{"no_open": True}'/>-->
+<!--                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>-->
+<!--                                <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'/>-->
+<!--                            </div>-->
+                            <field name="pant_qty"/>
+                            <field name="shirt_qty"/>
+                        </group>
+                        <group>
+                            <field name="date" readonly="1"/>
+                            <field name="phone"/>
+                            <field name="delivery_date"/>
+                            <h4 style="border-bottom:1px solid black;"><span>Total Amount</span></h4>
+                            <field name="total_amount"/>
+                            <field name="deposit_amount" readonly="1"/>
+                            <field name="remaining_amount" style="color:red; font-weight:bold;"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pant">
+                            <field name="pant_ids">
+                                <list>
+                                    <field name="order_id" column_invisible="True"/>
+                                    <field name="pant_type_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                    <field name="pant_qty" sum="pant_qty"/>
+                                    <field name="pant_style_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                    <field name="silai_type_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                    <field name="pant_price"/>
+                                    <field name="notes"/>
+                                    <field name="discount"/>
+                                    <field name="total_price" sum="total_price"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group string="Basic Details">
+                                            <field name="pant_qty" required="1" />
+                                            <field name="pant_style_id" required="1" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                            <field name="pant_lambai"/>
+                                            <field name="pant_kamar"/>
+                                            <field name="pant_sit"/>
+                                            <field name="pant_jang"/>
+                                            <field name="pant_bottom"/>
+                                            <field name="pant_kistak"/>
+                                            <field name="pant_guthna"/>
+                                            <field name="pant_front_pocket"/>
+                                            <field name="pant_back_pocket"/>
+                                            <field name="pant_type_id" required="1" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                            <field name="silai_type_id" required="1" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                        </group>
+                                        <group string="Amount">
+                                            <field name="pant_price"/>
+                                            <field name="discount"/>
+                                            <field name="total_price"/>
+                                        </group>
+                                    </group>
+                                    <group string="Notes">
+                                        <field name="notes" placeholder="Notes...!"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Shirt">
+                            <field name="shirt_ids">
+                                <list>
+                                    <field name="order_id" column_invisible="True"/>
+                                    <field name="shirt_style_id" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                    <field name="shirt_qty" sum="shirt_qty"/>
+                                    <field name="shirt_aastin"/>
+                                    <field name="shirt_patti"/>
+                                    <field name="shirt_price"/>
+                                    <field name="notes"/>
+                                    <field name="discount"/>
+                                    <field name="total_price" sum="total_price"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group string="Basic Details">
+                                            <field name="shirt_qty" required="1"/>
+                                            <field name="shirt_style_id" required="1" options="{'no_edit': True, 'no_create': True, 'no_open': True}"/>
+                                            <field name="shirt_lambai"/>
+                                            <field name="shirt_chati"/>
+                                            <field name="shirt_shoulder"/>
+                                            <field name="shirt_aastin"/>
+                                            <field name="shirt_gala"/>
+                                            <field name="shirt_peat"/>
+                                            <field name="shirt_front"/>
+                                            <field name="shirt_patti" required="1"/>
+                                            <field name="others"/>
+                                            <field name="shirt_collar"/>
+                                            <field name="shirt_a"/>
+                                        </group>
+                                        <group string="Amount">
+                                            <field name="shirt_price"/>
+                                            <field name="discount"/>
+                                            <field name="total_price"/>
+                                        </group>
+                                    </group>
+                                    <group string="Notes">
+                                        <field name="notes" placeholder="Notes...!"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Other">
+                            <group>
+                                <field name="note"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tailor_order_search" model="ir.ui.view">
+        <field name="name">tailor.order.search</field>
+        <field name="model">tailor.order</field>
+        <field name="arch" type="xml">
+            <search>
+
+                <!-- Search fields -->
+                <field name="name" string="Order No"/>
+                <field name="customer_id" string="Customer"/>
+                <field name="phone" string="Phone"/>
+
+                <!-- Filters -->
+                <filter string="Today" name="filter_today"
+                        domain="[('delivery_date', '=', context_today())]"/>
+                <!-- Filter by state -->
+                <filter string="State" name="group_state" context="{'group_by': 'state'}"/>
+                <filter string="Draft" name="state_draft" domain="[('state','=','draft')]"/>
+                <filter string="Confirm" name="state_confirm" domain="[('state','=','confirm')]"/>
+                <filter string="Done" name="state_done" domain="[('state','=','done')]"/>
+
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Delivery Date" name="group_delivery" context="{'group_by': 'delivery_date'}"/>
+                    <filter string="City" name="group_city" context="{'group_by': 'city'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_tailor_orders" model="ir.actions.act_window">
+        <field name="name">Tailor Orders</field>
+        <field name="res_model">tailor.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_tailor_order_search"/>
+        <field name="help">Manage tailoring orders</field>
+        <field name="context">{'search_default_group_state': 1}</field>
+    </record>
+
+    <menuitem id="menu_tailor_orders" name="Orders" parent="tailoring_app.menu_tailor_root" action="tailoring_app.action_tailor_orders" sequence="1"/>
+</odoo>

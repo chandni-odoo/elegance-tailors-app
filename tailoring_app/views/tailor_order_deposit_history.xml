@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_tailor_order_deposit_history_tree" model="ir.ui.view">
+        <field name="name">tailor.order.deposit.history.tree</field>
+        <field name="model">tailor.order.deposit.history</field>
+        <field name="arch" type="xml">
+            <list string="Deposit History">
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="customer_id"/>
+                <field name="phone"/>
+                <field name="date"/>
+                <field name="amount"/>
+                <field name="notes"/>
+                <field name="type"/>
+                <button name="action_lift_deposit_receipt" string="Print Recipt" type="object" class="oe_highlight"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_tailor_order_deposit_history_form" model="ir.ui.view">
+        <field name="name">tailor.order.deposit.history.form</field>
+        <field name="model">tailor.order.deposit.history</field>
+        <field name="arch" type="xml">
+            <form string="Deposit Entry">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="order_id" readonly="1"/>
+                            <field name="customer_id" readonly="1"/>
+                            <field name="phone" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="type" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="amount" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" readonly="0"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_tailor_order_deposit_history_search" model="ir.ui.view">
+        <field name="name">tailor.order.deposit.history.search</field>
+        <field name="model">tailor.order.deposit.history</field>
+        <field name="arch" type="xml">
+            <search string="Search Deposit History">
+
+                <!-- Searchable fields -->
+                <field name="name" string="Payment Name"/>
+                <field name="order_id"/>
+                <field name="customer_id"/>
+                <field name="phone"/>
+                <field name="date"/>
+                <!-- Filters -->
+                <filter string="Today" name="filter_date_deadline_today"
+                        domain="[('create_date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="This Week" name="creation_date_filter" domain="[
+                ('create_date', '>=', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S')),
+                ('create_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()).strftime('%Y-%m-%d %H:%M:%S'))]"/>
+
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Order" name="order" context="{'group_by':'order_id'}"/>
+                    <filter string="Customer" name="customer" context="{'group_by':'customer_id'}"/>
+                    <filter string="Date" name="date" context="{'group_by':'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="action_tailor_order_deposit_history" model="ir.actions.act_window">
+        <field name="name">Deposit History</field>
+        <field name="res_model">tailor.order.deposit.history</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="view_tailor_order_deposit_history_search"/>
+    </record>
+
+    <menuitem id="menu_tailor_deposit_history"
+              name="Payment History"
+              parent="menu_payment_history"
+              action="action_tailor_order_deposit_history"/>
+</odoo>

@@ -1,0 +1,39 @@
+<odoo>
+
+    <record id="view_tailor_order_import_wizard" model="ir.ui.view">
+        <field name="name">tailor.order.import.wizard.form</field>
+        <field name="model">tailor.order.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Tailor Orders">
+                <group>
+                    <field name="file" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+
+                <footer>
+                    <button name="action_import_file"
+                            string="Import"
+                            type="object"
+                            class="btn-primary"/>
+
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_tailor_order_import_wizard" model="ir.actions.act_window">
+        <field name="name">Import Tailor Orders</field>
+        <field name="res_model">tailor.order.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="menu_tailor_order_import"
+              name="Import Orders"
+              parent="tailoring_app.menu_tailor_management"
+              action="action_tailor_order_import_wizard"
+              sequence="2"/>
+</odoo>

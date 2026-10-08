@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Existing Records -->
+    <record id="shirt_type_formal" model="tailor.shirt.type">
+        <field name="name">Formal Shirt</field>
+        <field name="code">FOR</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_casual" model="tailor.shirt.type">
+        <field name="name">Casual Shirt</field>
+        <field name="code">CAS</field>
+        <field name="fit_type">slim</field>
+        <field name="sleeve_type">half</field>
+        <field name="collar_type">cutaway</field>
+    </record>
+
+    <record id="shirt_type_chinese" model="tailor.shirt.type">
+        <field name="name">Chinese Collar Shirt</field>
+        <field name="code">CHI</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">chinese</field>
+    </record>
+
+    <record id="shirt_type_rollup" model="tailor.shirt.type">
+        <field name="name">Roll-Up Sleeve Shirt</field>
+        <field name="code">ROL</field>
+        <field name="fit_type">loose</field>
+        <field name="sleeve_type">rollup</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+
+    <!-- New Shirt Types -->
+    <record id="shirt_type_apple_cut" model="tailor.shirt.type">
+        <field name="name">Apple Cut</field>
+        <field name="code">APL</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_manila" model="tailor.shirt.type">
+        <field name="name">Manila</field>
+        <field name="code">MAN</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_short_manila" model="tailor.shirt.type">
+        <field name="name">Short Manila</field>
+        <field name="code">SMN</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">half</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_nehru" model="tailor.shirt.type">
+        <field name="name">Nehru</field>
+        <field name="code">NEH</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_sadha_shart" model="tailor.shirt.type">
+        <field name="name">Sadha Shirt</field>
+        <field name="code">SAD</field>
+        <field name="fit_type">loose</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_pathani" model="tailor.shirt.type">
+        <field name="name">Pathani</field>
+        <field name="code">PAT</field>
+        <field name="fit_type">loose</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_suit" model="tailor.shirt.type">
+        <field name="name">Suit</field>
+        <field name="code">SUI</field>
+        <field name="fit_type">slim</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_safari" model="tailor.shirt.type">
+        <field name="name">Safari</field>
+        <field name="code">SAF</field>
+        <field name="fit_type">loose</field>
+        <field name="sleeve_type">half</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_jacket" model="tailor.shirt.type">
+        <field name="name">Jacket</field>
+        <field name="code">JKT</field>
+        <field name="fit_type">loose</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+    <record id="shirt_type_vardi" model="tailor.shirt.type">
+        <field name="name">Vardi</field>
+        <field name="code">VRD</field>
+        <field name="fit_type">regular</field>
+        <field name="sleeve_type">full</field>
+        <field name="collar_type">regular</field>
+    </record>
+
+</odoo>

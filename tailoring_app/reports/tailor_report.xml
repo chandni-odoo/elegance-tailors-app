@@ -1,0 +1,319 @@
+<odoo>
+    <record id="paperformat_pant_quarter" model="report.paperformat">
+        <field name="name">Pant Quarter Size</field>
+        <field name="format">custom</field>
+        <field name="page_height">148</field>
+        <field name="page_width">105</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">3</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_pant_measurement_pdf" model="ir.actions.report">
+        <field name="name">Pant Measurement</field>
+        <field name="model">tailor.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tailoring_app.report_pant_measurement</field>
+        <field name="report_file">tailoring_app.report_pant_measurement</field>
+        <field name="paperformat_id" ref="tailoring_app.paperformat_pant_quarter"/>
+        <field name="print_report_name">
+            'Pant Naap-' + (object.name)
+        </field>
+    </record>
+    <record id="action_shirt_measurement_pdf" model="ir.actions.report">
+        <field name="name">Shirt Measurement</field>
+        <field name="model">tailor.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tailoring_app.report_shirt_measurement</field>
+        <field name="report_file">tailoring_app.report_shirt_measurement</field>
+        <field name="paperformat_id" ref="tailoring_app.paperformat_pant_quarter"/>
+        <field name="print_report_name">
+            'Shirt Naap-' + (object.name)
+        </field>
+    </record>
+
+
+    <template id="report_pant_measurement">
+        <t t-call="web.basic_layout">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding-top: 0 !important;
+                padding-left: 5px;
+                padding-bottom: 0 !important;
+            }
+        </style>
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="padding:5px; font-family:Arial, sans-serif;">
+                    <table style="width:100%; border-collapse:collapse; font-size:20px; border:2px solid #000;">
+
+                        <tr>
+                            <th colspan="4"
+                                style="text-align:center; font-weight:bold;">
+                                PANT
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="4"
+                                style="font-weight:bold; background:#d9d9d9; text-align:center; font-size:15px;">
+                                <t t-esc="doc.customer_id.name"/>
+                            </th>
+                        </tr>
+
+                        <!-- HEADER -->
+                        <tr>
+                            <th width="25%" style="text-align:left; font-weight:bold;">NUMBER</th>
+                            <th width="75%" style="text-align:left; font-weight:bold;" colspan="3"><t t-esc="doc.phone"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:left; font-weight:bold;">ADDRESS</th>
+                            <th style="text-align:left; font-weight:bold;font-size: 17px;" colspan="3"><t t-esc="doc.address"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:left; font-weight:bold;">D DATE</th>
+                            <th style="text-align:left; font-weight:bold;" colspan="3"><t t-esc="doc.delivery_date"/></th>
+                        </tr>
+                        <!-- QUANTITY -->
+                        <tr style="border-top: 2px solid black;">
+                            <th width="29%" style="text-align:center; font-weight:bold;">QUANTITY</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_qty"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_qty"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_qty"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">STYLE</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_style_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_style_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_style_id.name"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">LAMBAI</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_lambai"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_lambai"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_lambai"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">KAMAR</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_kamar"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_kamar"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_kamar"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">SIT</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_sit"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_sit"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_sit"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">JANG</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_jang"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_jang"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_jang"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">BOTTOM</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_bottom"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_bottom"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_bottom"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">KISTAK</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_kistak"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_kistak"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_kistak"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">GUTHNA</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_guthna"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_guthna"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_guthna"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">F.POCK.</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="dict(doc.pant_ids[0]._fields['pant_back_pocket'].selection).get(doc.pant_ids[0].pant_back_pocket)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="dict(doc.pant_ids[1]._fields['pant_back_pocket'].selection).get(doc.pant_ids[1].pant_back_pocket)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="dict(doc.pant_ids[2]._fields['pant_back_pocket'].selection).get(doc.pant_ids[2].pant_back_pocket)"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">B.POCK.</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="dict(doc.pant_ids[0]._fields['pant_back_pocket'].selection).get(doc.pant_ids[0].pant_back_pocket)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="dict(doc.pant_ids[1]._fields['pant_back_pocket'].selection).get(doc.pant_ids[1].pant_back_pocket)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="dict(doc.pant_ids[2]._fields['pant_back_pocket'].selection).get(doc.pant_ids[2].pant_back_pocket)"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">TYPE</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].pant_type_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].pant_type_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].pant_type_id.name"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">SILAI-TYPE</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].silai_type_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].silai_type_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].silai_type_id.name"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">NOTE</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>0" t-esc="doc.pant_ids[0].notes"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>1" t-esc="doc.pant_ids[1].notes"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.pant_ids)>2" t-esc="doc.pant_ids[2].notes"/></th>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_shirt_measurement">
+        <t t-call="web.basic_layout">
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding-top: 0 !important;
+                padding-left: 5px;
+                padding-bottom: 0 !important;
+            }
+        </style>
+
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="padding:5px; font-family:Arial, sans-serif;">
+                    <table style="width:100%; border-collapse:collapse; font-size:20px; border:2px solid #000;">
+
+                        <!-- TITLE -->
+                        <tr>
+                            <th colspan="4"
+                                style="text-align:center; font-weight:bold;">
+                                SHIRT
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="4"
+                                style="font-weight:bold; background:#d9d9d9; text-align:center;">
+                                <t t-esc="doc.customer_id.name"/>
+                            </th>
+                        </tr>
+
+                        <!-- HEADER -->
+                        <tr>
+                            <th width="25%" style="text-align:left; font-weight:bold;">NUMBER</th>
+                            <th width="75%" style="text-align:left; font-weight:bold;" colspan="3"><t t-esc="doc.phone"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:left; font-weight:bold;">ADDRESS</th>
+                            <th style="text-align:left; font-weight:bold;font-size: 17px;" colspan="3"><t t-esc="doc.address"/></th>
+                        </tr>
+
+                        <tr>
+                            <th style="text-align:left; font-weight:bold;">D DATE</th>
+                            <th style="text-align:left; font-weight:bold;" colspan="3"><t t-esc="doc.delivery_date"/></th>
+                        </tr>
+                        <tr style="border-top: 2px solid black;">
+                            <th width="29%" style="text-align:center; font-weight:bold;">QUANTITY</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_qty"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_qty"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_qty"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">STYLE</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_style_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_style_id.name"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_style_id.name"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">LAMBAI</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_lambai"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_lambai"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_lambai"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">CHATI</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_chati"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_chati"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_chati"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">SHOLDER</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_shoulder"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_shoulder"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_shoulder"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">AASTIN</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_aastin"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_aastin"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_aastin"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">GALA</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_gala"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_gala"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_gala"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">PEAT</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_peat"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_peat"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_peat"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">FRONT</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].shirt_front"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].shirt_front"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].shirt_front"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">PATTI</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="dict(doc.shirt_ids[0]._fields['shirt_patti'].selection).get(doc.shirt_ids[0].shirt_patti)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="dict(doc.shirt_ids[1]._fields['shirt_patti'].selection).get(doc.shirt_ids[1].shirt_patti)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="dict(doc.shirt_ids[2]._fields['shirt_patti'].selection).get(doc.shirt_ids[2].shirt_patti)"/></th>
+                        </tr>
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">COLLAR</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="dict(doc.shirt_ids[0]._fields['shirt_collar'].selection).get(doc.shirt_ids[0].shirt_collar)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="dict(doc.shirt_ids[1]._fields['shirt_collar'].selection).get(doc.shirt_ids[1].shirt_collar)"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="dict(doc.shirt_ids[2]._fields['shirt_collar'].selection).get(doc.shirt_ids[2].shirt_collar)"/></th>
+                        </tr>
+                        <!-- NOTE -->
+                        <tr>
+                            <th style="text-align:center; font-weight:bold;">FRONT</th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>0" t-esc="doc.shirt_ids[0].notes"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>1" t-esc="doc.shirt_ids[1].notes"/></th>
+                            <th  width="24%" style="text-align:left; font-weight:bold;"><t t-if="len(doc.shirt_ids)>2" t-esc="doc.shirt_ids[2].notes"/></th>
+                        </tr>
+
+                        <tr>
+                            <th colspan="4" style="border:1px solid #000; padding:6px;">&#160;</th>
+                        </tr>
+                        <tr>
+                            <th colspan="4" style="border:1px solid #000; padding:6px;">&#160;</th>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Narrow -->
+    <record id="pant_style_narrow" model="tailor.pant.style">
+        <field name="name">Narrow</field>
+        <field name="code">NAR</field>
+        <field name="waist_type">normal</field>
+        <field name="fit_type">slim</field>
+    </record>
+
+    <!-- Parallel -->
+    <record id="pant_style_parallel" model="tailor.pant.style">
+        <field name="name">Parallel</field>
+        <field name="code">PAR</field>
+        <field name="waist_type">normal</field>
+        <field name="fit_type">regular</field>
+    </record>
+
+    <!-- Bootcut -->
+    <record id="pant_style_bootcut" model="tailor.pant.style">
+        <field name="name">Bootcut</field>
+        <field name="code">BOO</field>
+        <field name="waist_type">high</field>
+        <field name="fit_type">regular</field>
+    </record>
+
+    <!-- Pyjama -->
+    <record id="pant_style_pyjama" model="tailor.pant.style">
+        <field name="name">Pyjama</field>
+        <field name="code">PYJ</field>
+        <field name="waist_type">low</field>
+        <field name="fit_type">loose</field>
+    </record>
+
+    <!-- Chudidar -->
+    <record id="pant_style_chudidar" model="tailor.pant.style">
+        <field name="name">Chudidar</field>
+        <field name="code">CHU</field>
+        <field name="waist_type">normal</field>
+        <field name="fit_type">skinny</field>
+    </record>
+
+    <!-- Salwar -->
+    <record id="pant_style_salwar" model="tailor.pant.style">
+        <field name="name">Salwar</field>
+        <field name="code">SAL</field>
+        <field name="waist_type">high</field>
+        <field name="fit_type">loose</field>
+    </record>
+</odoo>

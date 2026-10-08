@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- =================== PAPER FORMAT (A4 Quarter) =================== -->
+    <record id="paperformat_a4_quarter" model="report.paperformat">
+        <field name="name">A4 Quarter Size - Deposit Receipt</field>
+        <field name="format">custom</field>
+        <field name="page_height">200</field>
+        <field name="page_width">150</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">8</field>
+        <field name="margin_right">8</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">5</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="action_deposit_receipt_pdf" model="ir.actions.report">
+        <field name="name">Deposit Receipt</field>
+        <field name="model">tailor.order.deposit.history</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">tailoring_app.report_deposit_receipt</field>
+        <field name="report_file">tailoring_app.report_deposit_receipt</field>
+        <field name="paperformat_id" ref="tailoring_app.paperformat_a4_quarter"/>
+        <field name="print_report_name">
+            'Deposit_Receipt_' + (object.name or 'Receipt')
+        </field>
+    </record>
+
+
+    <!-- =================== QWEB TEMPLATE =================== -->
+    <template id="report_deposit_receipt">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="padding: 5px; font-size: 13px;">
+                    <table style="width: 100%; margin-bottom: 15px; border-top: 0px solid white;border-right: 0px solid white;border-bottom: 0px solid white;border-left: 0px solid white; border-collapse: collapse;">
+                        <tr style="border: none;">
+                            <td style="width: 45%; text-align: left; vertical-align: top; border: none;">
+                                <img t-attf-src="/logo.png?company_id=#{doc.company_id.id}"
+                                     style="height: 70px;"/>
+                            </td>
+                            <td style="width: 55%; text-align: right; vertical-align: top; border: none; font-size: 12px; line-height: 16px;">
+                                <strong style="font-size: 14px;">
+                                    <t t-esc="doc.company_id.name"/>
+                                </strong><br/>
+                                <t t-if="doc.company_id.street">
+                                    <t t-esc="doc.company_id.street"/><br/>
+                                </t>
+                                <t t-if="doc.company_id.street2">
+                                    <t t-esc="doc.company_id.street2"/><br/>
+                                </t>
+                                <t t-esc="doc.company_id.city"/> - <t t-esc="doc.company_id.zip"/><br/>
+                                <t t-esc="doc.company_id.state_id.name"/>,
+                                <t t-esc="doc.company_id.country_id.name"/><br/>
+                                <t t-if="doc.company_id.phone">
+                                    <strong>Ph:</strong> <t t-esc="doc.company_id.phone"/><br/>
+                                </t>
+                                <t t-if="doc.company_id.email">
+                                    <strong>Email:</strong> <t t-esc="doc.company_id.email"/>
+                                </t>
+                            </td>
+                        </tr>
+                    </table>
+                <h3 style="text-align: center; margin: 10px 0 2px 0; text-transform: uppercase;">
+                    <span style="font-size: 18px; letter-spacing: 1px;">Deposit Receipt</span>
+                </h3>
+
+                <div style="width: 100%; text-align: center; margin-bottom: 8px;">
+                    <span style="display: inline-block; width: 12rem; height: 2px; background: #000;"></span>
+                </div>
+                    <table style="width: 100%; font-size: 12px; border: 1px solid black; border-collapse: collapse;">
+                        <tr>
+                            <td style="padding-left: 5px; border: 1px solid black;"><strong>Customer:</strong></td>
+                            <td style="padding-left: 5px; border: 1px solid black;"><t t-esc="doc.customer_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 5px; border: 1px solid black;"><strong>Phone No:</strong></td>
+                            <td style="padding-left: 5px; border: 1px solid black;"><t t-esc="doc.order_id.phone"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 5px; border: 1px solid black;"><strong>Order No:</strong></td>
+                            <td style="padding-left: 5px; border: 1px solid black;"><t t-esc="doc.order_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td style="padding-left: 5px; border: 1px solid black;"><strong>Date:</strong></td>
+                            <td style="padding-left: 5px; border: 1px solid black;"><t t-esc="doc.date"/></td>
+                        </tr>
+                    </table>
+
+                    <hr style="margin: 10px 0;"/>
+
+                    <!-- ===== Deposit Details ===== -->
+                    <table style="width: 100%; border-collapse: collapse; font-size: 13px; border: 1px solid black; border-collapse: collapse;" border="1">
+                        <tr>
+                            <th width="25%" style="padding: 6px; border: 1px solid black;">Deposit Amount</th>
+                            <td width="75%" style="padding: 6px; border: 1px solid black;">₹ <t t-esc="doc.amount"/></td>
+                        </tr>
+                        <tr>
+                            <th width="25%" style="padding: 6px; border: 1px solid black;">Payment Type</th>
+                            <td width="75%" style="padding: 6px; border: 1px solid black;">
+                                <t t-esc="dict(doc._fields['type'].selection).get(doc.type)"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th width="25%" style="padding: 6px; border: 1px solid black;">Notes</th>
+                            <td width="75%" style="padding: 6px; border: 1px solid black;"><t t-raw="doc.notes"/></td>
+                        </tr>
+                    </table>
+
+                    <!-- Signature -->
+                    <p style="margin-top: 15px; text-align: right; font-size: 12px;">
+                        <strong>Signature</strong>
+                    </p>
+
+                </div>
+
+            </t>
+
+        </t>
+    </template>
+</odoo>

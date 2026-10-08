@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Narrow -->
+    <record id="pant_type_narrow" model="tailor.pant.type">
+        <field name="name">Narrow</field>
+        <field name="code">NAR</field>
+    </record>
+
+    <!-- Parallel -->
+    <record id="pant_type_parallel" model="tailor.pant.type">
+        <field name="name">Parallel</field>
+        <field name="code">PAR</field>
+    </record>
+
+    <!-- Bootcut -->
+    <record id="pant_type_bootcut" model="tailor.pant.type">
+        <field name="name">Bootcut</field>
+        <field name="code">BOO</field>
+    </record>
+
+    <!-- Pyjama -->
+    <record id="pant_type_pyjama" model="tailor.pant.type">
+        <field name="name">Pyjama</field>
+        <field name="code">PYJ</field>
+    </record>
+
+    <!-- Chudidar -->
+    <record id="pant_type_chudidar" model="tailor.pant.type">
+        <field name="name">Chudidar</field>
+        <field name="code">CHU</field>
+    </record>
+
+    <!-- Salwar -->
+    <record id="pant_type_salwar" model="tailor.pant.type">
+        <field name="name">Salwar</field>
+        <field name="code">SAL</field>
+    </record>
+
+</odoo>

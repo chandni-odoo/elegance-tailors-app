@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="silayi_simple" model="tailor.silayi.type">
+        <field name="name">Simple Silayi</field>
+        <field name="code">SIM</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+    <record id="silayi_double" model="tailor.silayi.type">
+        <field name="name">Double Silayi</field>
+        <field name="code">DBL</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+    <record id="silayi_machine" model="tailor.silayi.type">
+        <field name="name">Machine Silayi</field>
+        <field name="code">MAC</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+    <record id="silayi_hand" model="tailor.silayi.type">
+        <field name="name">Hand Silayi</field>
+        <field name="code">HND</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+    <record id="silayi_picco" model="tailor.silayi.type">
+        <field name="name">Picco</field>
+        <field name="code">PIC</field>
+        <field name="charge_type">meter</field>
+    </record>
+
+    <record id="silayi_interlock" model="tailor.silayi.type">
+        <field name="name">Interlock</field>
+        <field name="code">INT</field>
+        <field name="charge_type">meter</field>
+    </record>
+
+    <record id="silayi_fall" model="tailor.silayi.type">
+        <field name="name">Fall Silayi</field>
+        <field name="code">FAL</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+    <record id="silayi_kadhai" model="tailor.silayi.type">
+        <field name="name">Embroidery (Kadhai)</field>
+        <field name="code">KDH</field>
+        <field name="charge_type">piece</field>
+    </record>
+
+</odoo>

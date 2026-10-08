@@ -1,0 +1,5 @@
+<odoo>
+    <menuitem id="menu_tailor_root" name="Tailoring" web_icon="tailoring_app,static/description/icon.jpg" sequence="2"/>
+    <menuitem id="menu_payment_history" name="KhataBook" parent="menu_tailor_root" sequence="3"/>
+    <menuitem id="menu_tailor_management" name="Configuration" parent="menu_tailor_root" sequence="4"/>
+</odoo>

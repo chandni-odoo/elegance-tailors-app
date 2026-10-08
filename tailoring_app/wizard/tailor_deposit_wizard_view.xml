@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_tailor_deposit_wizard_form" model="ir.ui.view">
+        <field name="name">tailor.deposit.wizard.form</field>
+        <field name="model">tailor.deposit.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Add Deposit" create="false" edit="false">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="order_id" string="Order" class="oe_edit_only"/>
+                        <h1>
+                            <field name="order_id" readonly="1" options='{"no_open": True}'/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="customer_id" readonly="1"/>
+                            <field name="deposit_amount"/>
+                        </group>
+                        <group>
+                            <field name="total_amount" readonly="1"/>
+                            <field name="type"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="notes" placeholder="Notes..!"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Confirm"
+                            type="object"
+                            name="action_confirm_deposit"
+                            class="btn-primary"/>
+
+                    <button string="Cancel"
+                            class="btn-secondary"
+                            special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
